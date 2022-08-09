@@ -5,9 +5,42 @@ public class SortCompare
     public static void main(String[] args)
     {
         int[] test = genArray(10);
+        printArray(test);
+        selectionSort(test);
         printArray(test);       
     }
 
+    public static void selectionSort(int[] arr)
+    {
+        int len = arr.length;
+        for(int i = 0; i < len-1; i++)
+        {
+            int largestNumIndex = 0;
+            // length of unsorted part of array is (len - i) 
+            for(int j = 1; j < (len - i); j++)
+            {
+                if(arr[j] > arr[largestNumIndex] )
+                {
+                    largestNumIndex = j;
+                }
+            }
+            int placeForLargestNum = (len-i)-1;
+            if(largestNumIndex != placeForLargestNum)
+            {
+                swap(arr, largestNumIndex, placeForLargestNum);
+            }
+        }
+    }
+
+    // swaps values stored at the specified positions of an array 
+    public static void swap(int[] arr, int p1, int p2)
+    {
+        int temp = arr[p1];
+        arr[p1] = arr[p2];
+        arr[p2] = temp;
+    }
+
+    // creates array filled with random values between [-n,n]
     public static int[] genArray(int len)
     {
         int[] randArray = new int[len];
