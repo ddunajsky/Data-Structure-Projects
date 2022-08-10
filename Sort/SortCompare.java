@@ -6,7 +6,7 @@ public class SortCompare
     {
         int[] test = genArray(10);
         printArray(test);
-        selectionSort(test);
+        insertionSort(test);
         printArray(test);       
     }
 
@@ -28,6 +28,20 @@ public class SortCompare
             if(largestNumIndex != placeForLargestNum)
             {
                 swap(arr, largestNumIndex, placeForLargestNum);
+            }
+        }
+    }
+
+    public static void insertionSort(int[] arr)
+    {
+        int len = arr.length;
+        for(int i = 1; i < len; i++)
+        {
+            int index = i;
+            while(index > 0 && arr[index] < arr[index-1])
+            {
+                swap(arr, index, index-1);
+                index--;
             }
         }
     }
