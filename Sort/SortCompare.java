@@ -4,10 +4,11 @@ public class SortCompare
 {
     public static void main(String[] args)
     {
-        int[] test = genArray(10);
+        //int[] test = genArray(10);
+        int[] test = {-7,-6,6,2,6,3,0,0,-5,6,100000};
         printArray(test);
-        insertionSort(test);
-        printArray(test);       
+        int max = findMaxDigits(test);
+        System.out.print(max);       
     }
 
     public static void selectionSort(int[] arr)
@@ -44,6 +45,78 @@ public class SortCompare
                 index--;
             }
         }
+    }
+
+    public static void mergeSort(int[] arr)
+    {
+
+    }
+
+    public static void merge(int[] a, int[] b)
+    {
+        int length = a.length + b.length;
+        int[] arr = new arr[length];
+
+        int indexA = 0;
+        int indexB = 0;
+
+        for(int i = 0; i < length; i++)
+        {
+            if(a[indexA] < a[indexB])
+            {
+                arr[i] = a[indexA];
+                indexA++;
+            }
+            // equal case will fall here
+            else
+            {
+                arr[i] = b[indexB];
+                indexB++;
+            }
+        }
+    }
+
+    public static void radixSort(int[] arr)
+    {
+        // find max number of digits in numbers stored in arr
+        int maxDigits = 2;
+        int modValue = 10;
+        boolean done = false;
+        while()
+        {
+
+        }
+        
+
+        
+    }
+
+    // assist method for radix sort 
+    public static int findMaxDigits(int[] arr)
+    {
+        int maxDigit = 1;
+        int modValue = 10;
+        boolean done = false;
+        
+        while(!done)
+        {
+            for(int i = 0; i < arr.length; i++)
+            {
+                // if no remainder the number is greater than the modValue -> multuply modValue by 10 -> check all numbers against new mod value 
+                if(arr[i] % modValue == 0 && arr[i] != 0)
+                {
+                    maxDigit++;
+                    modValue *= 10;
+                    break;
+                }
+                // if it made it trough the array without breaking, all of the numbers are less than the modValue
+                if(i == arr.length - 1)
+                {
+                    done = true;
+                }
+            }
+        }
+        return maxDigit;
     }
 
     // swaps values stored at the specified positions of an array 
