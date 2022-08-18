@@ -1,14 +1,16 @@
 import java.util.Random;
+import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SortCompare
 {
     public static void main(String[] args)
     {
-        //int[] test = genArray(10);
-        int[] test = {-7,-6,6,2,6,3,0,0,-5,6,100000};
+        int[] test = genArray(20);
         printArray(test);
-        int max = findMaxDigits(test);
-        System.out.print(max);       
+        radixSort(test);
+        printArray(test);      
     }
 
     public static void selectionSort(int[] arr)
@@ -75,20 +77,75 @@ public class SortCompare
             }
         }
     }
-
-    public static void radixSort(int[] arr)
+ 
+    public static int[] radixSort(int[] arr)
     {
-        // find max number of digits in numbers stored in arr
-        int maxDigits = 2;
-        int modValue = 10;
-        boolean done = false;
-        while()
+        int maxDigits = findMaxDigits(arr);
+        // create buckets
+        Queue<Integer>[] buckets = new Queue[10];
+        for(int i = 0; i < 10; i++)
         {
-
+            buckets[i] = new LinkedList<Integer>();
         }
-        
 
+        int length = arr.length;
+        // repeat for each digit
+        for(int j = 0; j < maxDigits; j++)
+        {
+            for(int k = 0; k < length; k++)
+            {
+                // get the 'j' digit
+                int divisor = (int) Math.pow(10, j);
+                int whichBucket = Math.abs(((arr[k] / divisor)%10));
+                // add to correct list
+                buckets[whichBucket].add(arr[k]);
+            }
+            // pop values back into arr
+            int index = 0;
+            for(int z = 0; z <= 9; z++)
+            {
+                while(!buckets[z].isEmpty())
+                {
+                    arr[index] = buckets[z].remove();
+                    index++;
+                }
+            }
+            
+        }
+        dealWithNegatives(arr);
+        return arr;      
+    }
+
+    // fixes negative numbers in Radix Sort
+    public static void dealWithNegatives(int[] arr)
+    {
+        int length = arr.length;
+        Stack<Integer> negNums = new Stack<Integer>();
+        Queue<Integer> posNums = new LinkedList<Integer>();
         
+        for(int i = 0; i < length; i++)
+        {
+            if(arr[i] < 0)
+            {
+                negNums.push(arr[i]);
+            }
+            else
+            {
+                posNums.add(arr[i]);
+            }
+        }
+
+        int index = 0;
+        while(!negNums.empty())
+        {
+            arr[index] = negNums.pop();
+            index++;
+        }
+        while(!posNums.isEmpty())
+        {
+            arr[index] = posNums.remove();
+            index++;
+        }
     }
 
     // assist method for radix sort 
