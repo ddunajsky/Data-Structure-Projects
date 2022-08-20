@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -7,10 +8,32 @@ public class SortCompare
 {
     public static void main(String[] args)
     {
-        int[] test = genArray(20);
-        printArray(test);
-        radixSort(test);
-        printArray(test);      
+        /* 
+        Scanner scan = new Scanner(System.in);
+        boolean quit = false;
+
+        while(!quit)
+        {
+            System.out.println("Enter Size of Array: ");
+            int size = scan.nextInt();
+            System.out.println("Enter Sorting Method (I,S,R,M,Q): ");
+            String method = scan.next();
+
+            int[] test = genArray(size);
+            printArray(test);
+            if(method.equals("!"))
+            {
+                quit = true;
+            }
+
+
+        }
+        scan.close();
+        */
+        int[] a = {1,3,3,8,9};
+        int[] b = {0,3,3,5,7};
+        int[] ab = merge(a, b);
+        printArray(ab);
     }
 
     public static void selectionSort(int[] arr)
@@ -54,17 +77,17 @@ public class SortCompare
 
     }
 
-    public static void merge(int[] a, int[] b)
+    public static int[] merge(int[] a, int[] b)
     {
         int length = a.length + b.length;
-        int[] arr = new arr[length];
+        int[] arr = new int[length];
 
         int indexA = 0;
         int indexB = 0;
 
         for(int i = 0; i < length; i++)
         {
-            if(a[indexA] < a[indexB])
+            if(a[indexA] < b[indexB])
             {
                 arr[i] = a[indexA];
                 indexA++;
@@ -75,7 +98,32 @@ public class SortCompare
                 arr[i] = b[indexB];
                 indexB++;
             }
+
+            // when indexA reaches end of array
+            if(indexA >= a.length)
+            {
+                int index = i;
+                for(int j = indexB; j < b.length; j++)
+                {
+                    index++;
+                    arr[index] = b[j];
+                }
+                break;
+            }
+            // when indexB reaches end of array 
+            else if(indexB >= b.length)
+            {
+                int index = i;
+                for(int j = indexA; j < a.length; j++)
+                {
+                    index++;
+                    arr[index] = a[j];
+                }
+                break;
+            }
+            
         }
+        return arr;
     }
  
     public static int[] radixSort(int[] arr)
